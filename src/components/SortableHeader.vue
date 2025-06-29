@@ -1,6 +1,14 @@
 <template>
-  <th @click="onClick" class="cursor-pointer select-none px-4 py-2">
-    <div class="flex items-center">
+  <th class="cursor-pointer select-none px-4 py-2 relative">
+    <span
+        v-if="isActive"
+        @click.stop="onReset"
+        class="-top-5 w-full text-center font-light text-xs text-red-500 hover:underline"
+    >
+      reset
+    </span>
+
+    <div class="flex items-center" @click="onClick">
       <span class="w-full text-center">{{ label }}</span>
       <span v-if="isActive" class="ml-1">
         <svg v-if="dir === 1" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -29,5 +37,9 @@ const dir = computed(() => props.currentSort.dir)
 
 const onClick = () => {
   emit('sort-changed', { columnKey: props.columnKey })
+}
+
+const onReset = () => {
+  emit('sort-changed', { columnKey: null })
 }
 </script>
